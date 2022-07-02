@@ -1,1 +1,3 @@
-# mycronations
+# Mycronations
+
+Cool thing for micronations.
