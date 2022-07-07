@@ -1,11 +1,10 @@
 import logo from "./logo.svg";
 import "./App.css";
 import React, { useEffect, useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
-
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyDZQw0-1NsPyB55GOENJObaqZ9nkj7fVLU",
@@ -22,13 +21,12 @@ function App() {
   const db = getFirestore(app);
   const [countries, setCountries] = useState();
 
- useEffect(() => {
-    getCountries(db).then(data => {
-      console.log('data', data)
-      setCountries(data)
-    })
-  }, [])
-  
+  // useEffect(() => {
+  //   getCountries(db).then((data) => {
+  //     console.log("data", data);
+  //     setCountries(data);
+  //   });
+  // }, []);
 
   // Get a list of cities from your database
   async function getCountries(db) {
@@ -39,9 +37,12 @@ function App() {
   }
 
   return (
-    <div>{countries && countries.map((m, index) => (
-      <div key={index}>{m.name}</div>
-    ))}
+    <div>
+      <h1>Welcome to React Router!</h1>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="about" element={<About />} />
+        </Routes>
     </div>
   );
 }
