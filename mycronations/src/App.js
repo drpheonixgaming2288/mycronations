@@ -1,10 +1,13 @@
-import logo from "./logo.svg";
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import Landing from "./components/landing/Landing";
+import Nav from "./components/nav/Nav";
+import Ads from "./components/ads/Ads";
+import Footer from "./components/footer/Footer";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDZQw0-1NsPyB55GOENJObaqZ9nkj7fVLU",
@@ -37,12 +40,26 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Welcome to React Router!</h1>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="about" element={<About />} />
-        </Routes>
+    <div className="App">
+      <div className="row">
+        <div className="col-12 p-0">
+          <Nav />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-2 text-center p-0">
+          <Ads />
+        </div>
+        <div className="col-8">
+          <Routes>
+            <Route path="/" element={<Landing />} />
+          </Routes>
+        </div>
+        <div className="col-2 text-center p-0 m-0">
+          <Ads />
+        </div>
+        <Footer/>
+      </div>
     </div>
   );
 }
