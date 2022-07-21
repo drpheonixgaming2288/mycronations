@@ -1,7 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 import Landing from "./components/landing/Landing";
