@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { Routes, Route, Link } from "react-router-dom";
+import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 import { AuthProvider } from "./AuthContext";
 import Landing from "./components/landing/Landing";
