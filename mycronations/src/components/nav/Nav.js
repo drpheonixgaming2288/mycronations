@@ -2,17 +2,17 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Nav() {
-  const Navigate = useNavigate()
+  const Navigate = useNavigate();
   return (
     <nav
-      className="navbar navbar-expand-lg bg-dark navbar-dark text-center"
+      className="navbar navbar-expand-sm bg-dark navbar-dark text-center"
       style={{ fontFamily: "Oxygen" }}
     >
       <div className="container-fluid">
         <a
           className="navbar-brand"
           style={{ cursor: "pointer" }}
-          onClick={useNavigate("/")}
+          onClick={() => Navigate("/")}
         >
           Mycronations
         </a>
@@ -60,25 +60,42 @@ export default function Nav() {
                 Discord
               </a>
             </li>
+            <li className="nav-item d-block d-sm-none mb-1">
+              <button
+                className="btn btn-light"
+                style={{ marginRight: "4px", fontWeight: "bold" }}
+                onClick={() => Navigate("/login")}
+              >
+                Login
+              </button>
+            </li>
+            <li className="nav-item d-block d-sm-none">
+              <button
+                className="btn text-white"
+                style={{ marginRight: "4px", fontWeight: "bold" }}
+                onClick={() => Navigate("/register")}
+              >
+                Register
+              </button>
+            </li>
           </ul>
-        </div>
-        <div className="d-flex align-items-center">
-          <button
-            className="btn btn-light"
-            style={{ marginRight: "4px", fontWeight: "bold" }}
-            onClick={() => Navigate("/login")}
-          >
-            Login
-          </button>
-        </div>
-        <div className="d-flex align-items-center">
-          <button
-            className="btn btn-dark text-white"
-            style={{ fontWeight: "normal" }}
-            onClick={() => Navigate("/register")}
-          >
-            Register
-          </button>
+          {/*Desktop*/}
+          <div className="d-none d-sm-block">
+              <a
+                className="btn btn-light"
+                style={{fontWeight: "bold" }}
+                onClick={() => Navigate("/login")}
+              >
+                Login
+              </a>
+              <a
+                className="btn btn-dark text-white"
+                style={{ fontWeight: "normal" }}
+                onClick={() => Navigate("/register")}
+              >
+                Register
+              </a>
+          </div>
         </div>
       </div>
     </nav>
