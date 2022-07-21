@@ -1,35 +1,29 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import { AuthProvider } from "./AuthContext";
 import Landing from "./components/landing/Landing";
 import Nav from "./components/nav/Nav";
 import Ads from "./components/ads/Ads";
 import Footer from "./components/footer/Footer";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDZQw0-1NsPyB55GOENJObaqZ9nkj7fVLU",
-  authDomain: "mycronations-a3b4c.firebaseapp.com",
-  projectId: "mycronations-a3b4c",
-  storageBucket: "mycronations-a3b4c.appspot.com",
-  messagingSenderId: "789910154253",
-  appId: "1:789910154253:web:9f1c1b2f59c91624473944",
-};
-
-const app = initializeApp(firebaseConfig);
+import { auth, db } from "./Firebase";
+import Register from "./components/register/Register";
+import { onAuthStateChanged } from "firebase/auth";
 
 function App() {
-  const db = getFirestore(app);
   const [countries, setCountries] = useState();
 
-  // useEffect(() => {
-  //   getCountries(db).then((data) => {
-  //     console.log("data", data);
-  //     setCountries(data);
-  //   });
-  // }, []);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    getCountries(db).then((data) => {
+      console.log("data", data);
+      setCountries(data);
+    });
+  }, []);
 
   // Get a list of cities from your database
   async function getCountries(db) {
@@ -39,28 +33,38 @@ function App() {
     return countriesList;
   }
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user)
+     })
+  }, [])
+
   return (
-    <div className="App">
-      <div className="row">
-        <div className="col-12 p-0">
-          <Nav />
+    <BrowserRouter>
+      <AuthProvider value={{ currentUser }}>
+        <div className="App">
+          <div className="row">
+            <Nav />
+            <div className="col-12 p-0"></div>
+          </div>
+          <div className="row">
+            <div className="col-2 text-center p-0">
+              <Ads />
+            </div>
+            <div className="col-8">
+              <Routes>
+                <Route path="/" element={<Landing countries={countries} />} />
+                <Route path="/register" element={<Register />} />
+              </Routes>
+            </div>
+            <div className="col-2 text-center p-0 m-0">
+              <Ads />
+            </div>
+          </div>
+          <Footer />
         </div>
-      </div>
-      <div className="row">
-        <div className="col-2 text-center p-0">
-          <Ads />
-        </div>
-        <div className="col-8">
-          <Routes>
-            <Route path="/" element={<Landing />} />
-          </Routes>
-        </div>
-        <div className="col-2 text-center p-0 m-0">
-          <Ads />
-        </div>
-        <Footer/>
-      </div>
-    </div>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
